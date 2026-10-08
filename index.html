@@ -1,0 +1,1014 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <title>Cardápio Maresia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Quicksand:wght@400..700&display=swap"
+    rel="stylesheet">
+  <style>
+    /* Para imprimir: Chrome > Cmd+P > Salvar como PDF, Margens "Nenhuma", marcar "Gráficos de plano de fundo". */
+    @page {
+      size: 156mm 321mm;
+      margin: 0;
+    }
+
+    :root {
+      --margem: 18mm;
+      --azul: #006684;
+      --laranja: #b83c00;
+      --marrom-claro: #5c2417;
+      --texto: #341612;
+
+      /* Preços (.p) e quantidades (.q) em Lora. Peso: 700 = negrito, 400 = normal */
+      --peso-preco: 550;
+      --peso-qtd: 550;
+      --peso-desc: 550;
+      --tam-preco: 0.85em;
+      --tam-desc: 12pt;
+      --tam-qtd: 12pt;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #777;
+      font-family: Quicksand, sans-serif;
+      font-weight: 700;
+      color: var(--texto);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .pagina {
+      width: 156mm;
+      height: 321mm;
+      margin: 10mm auto;
+      padding-top: 13mm;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: url(img/fundo.jpg) center / cover;
+    }
+
+    @media print {
+      body {
+        background: none;
+      }
+
+      .pagina {
+        margin: 0;
+        break-after: page;
+      }
+
+      .pagina:last-child {
+        break-after: auto;
+      }
+    }
+
+    /* Faixa azul dos títulos */
+    h2 {
+      background: var(--azul);
+      color: #fff;
+      font: 700 28pt/1.15 Lora, serif;
+      text-align: center;
+      padding: 3.5mm 4mm;
+      margin-bottom: 5mm;
+    }
+
+    *+h2 {
+      margin-top: 7mm;
+    }
+
+    h2 small {
+      font-size: 16pt;
+    }
+
+    /* Subtítulos */
+    h3 {
+      font-family: Lora, serif;
+      font-size: 13pt;
+      color: var(--laranja);
+      text-transform: uppercase;
+      text-align: center;
+      padding: 0 var(--margem);
+      margin: 0 0 2.5mm;
+    }
+
+    .azul {
+      color: var(--azul);
+    }
+
+    /* Subtítulo logo abaixo da faixa: sobe para ficar junto do título */
+    h2+h3 {
+      margin-top: -4mm;
+    }
+
+    h3 .q {
+      text-transform: none;
+    }
+
+    h3 .medida {
+      color: var(--laranja);
+    }
+
+    .marrom {
+      font-family: Lora, serif;
+      color: var(--texto);
+    }
+
+    /* Lista com pontilhado: nome (detalhe) ....... preço */
+    /* --fs: tamanho do texto das listas; dá pra reduzir numa página específica com style="--fs: 14pt" */
+    .lista {
+      list-style: none;
+      padding: 0 var(--margem);
+      font-size: var(--fs, 15pt);
+      line-height: 1.6;
+    }
+
+    .lista li {
+      display: flex;
+      align-items: baseline;
+      gap: 1mm;
+    }
+
+    .lista small,
+    .lista em {
+      color: var(--laranja);
+      font-style: normal;
+      white-space: nowrap;
+    }
+
+    .lista small.lora,
+    .burger h4 small {
+      font-family: Lora, serif;
+    }
+
+    .lista i {
+      flex: 1;
+      min-width: 4mm;
+      border-bottom: 1.6pt dotted var(--laranja);
+    }
+
+    .lista b {
+      white-space: nowrap;
+    }
+
+    /* Duas colunas de preço (ex.: 300 ml | 500 ml); .cab = linha de cabeçalho */
+    .lista.grade li {
+      gap: 0;
+    }
+
+    .lista.grade i {
+      margin-right: 1.5mm;
+    }
+
+    .lista.grade em {
+      width: 18mm;
+      text-align: center;
+    }
+
+    /* Uma única vertical contínua entre as 2 colunas de preço (18mm cada + 5mm de padding do .caixa .lista) */
+    .lista.grade {
+      position: relative;
+    }
+
+    .lista.grade::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 23mm;
+      border-left: 0.8pt solid var(--laranja);
+    }
+
+    .lista.grade .cab {
+      font: 700 12.5pt Lora, serif;
+      color: var(--azul);
+    }
+
+    .lista.grade .cab i {
+      border: 0;
+    }
+
+    .lista.grade .cab em {
+      color: var(--azul);
+      font-size: 1em;
+    }
+
+    /* Drinks: linha 1 = nome ..... preço; linha 2 = descrição (pode quebrar sem afetar o pontilhado) */
+    .lista.drinks {
+      line-height: 1.25;
+    }
+
+    .lista.drinks li {
+      flex-wrap: wrap;
+      margin-bottom: 3.4mm;
+    }
+
+    .lista.drinks small {
+      order: 1;
+      flex-basis: 100%;
+      line-height: 1.3;
+      /* volta a quebrar linha (.lista small é nowrap) */
+      white-space: normal;
+      /* termina antes da coluna do preço */
+      max-width: calc(100% - 20mm);
+    }
+
+    /* ingrediente nunca quebra no meio */
+    .lista.drinks small span {
+      white-space: nowrap;
+    }
+
+    /* Lista simples (sem preço), em 1 ou 2 colunas */
+    .simples {
+      list-style: none;
+      padding: 0 var(--margem);
+      font-size: var(--fs, 15pt);
+      line-height: 1.6;
+    }
+
+    .simples.duas {
+      columns: 2;
+      column-gap: 3mm;
+      text-align: center;
+    }
+
+    /* 7 itens por coluna, sem quebra de linha, bloco centralizado na página */
+    .simples.sete {
+      display: grid;
+      grid-template-rows: repeat(7, auto);
+      grid-auto-flow: column;
+      grid-auto-columns: max-content;
+      justify-content: center;
+      column-gap: 9mm;
+      white-space: nowrap;
+      text-align: left;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .bolinha li::before {
+      content: "• ";
+      color: #000;
+    }
+
+    /* Faixas de preço azul + laranja */
+    .precos {
+      display: flex;
+      gap: 3mm;
+      padding: 0 var(--margem);
+      margin-top: 4mm;
+    }
+
+    .precos+.precos {
+      margin-top: 2.5mm;
+    }
+
+    .precos>div {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .precos span {
+      font-size: 13pt;
+      color: #fff;
+      text-align: center;
+      padding: 2.2mm 1mm;
+      white-space: nowrap;
+    }
+
+    .precos span:first-child {
+      background: var(--azul);
+    }
+
+    .precos span:last-child {
+      background: var(--laranja);
+    }
+
+    .precos.coluna {
+      flex-direction: column;
+      gap: 1mm;
+      width: 72mm;
+      padding: 0;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .precos.coluna span {
+      padding: 1mm;
+    }
+
+    .precos.cheio {
+      margin-top: 5mm;
+    }
+
+    .precos.cheio span {
+      padding: 2.2mm;
+    }
+
+    .tabua {
+      padding: 0 var(--margem);
+      text-align: center;
+      font-size: 15pt;
+      line-height: 1.6;
+    }
+
+    .tabua em {
+      color: var(--laranja);
+      font-size: 12pt;
+      font-style: normal;
+      white-space: nowrap;
+    }
+
+    .tabua strong {
+      display: block;
+      color: var(--laranja);
+      margin-top: 2mm;
+    }
+
+    /* Item especial em destaque (moldura laranja) */
+    .especial {
+      margin: 4mm var(--margem) 0;
+      padding: 2mm 4mm;
+      border: 1.6pt solid var(--laranja);
+      outline: 1.6pt solid var(--laranja);
+      outline-offset: 1mm;
+      text-align: center;
+      font-family: Lora, serif;
+    }
+
+    .especial small {
+      display: block;
+      color: var(--laranja);
+      font-size: 10pt;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .especial b {
+      display: block;
+      font-family: Quicksand, sans-serif;
+      font-size: 15pt;
+      line-height: 1.4;
+    }
+
+    .especial em {
+      color: var(--laranja);
+      font-size: 13pt;
+      font-style: normal;
+    }
+
+    /* Retângulo de linha simples em volta de um grupo */
+    .caixa {
+      margin: 5mm var(--margem) 0;
+      padding: 3mm 0;
+      border: 1.6pt solid var(--laranja);
+    }
+
+    .caixa h3 {
+      display: table;
+      margin: 0 auto 2mm;
+      padding: 0 4mm 2mm;
+      border-bottom: 1.6pt solid var(--laranja);
+    }
+
+    .caixa .lista {
+      padding: 0 5mm;
+      line-height: 2;
+    }
+
+    /* Flores no rodapé */
+    .flores {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 120mm;
+      transform: translateX(-50%);
+    }
+
+    /* Capa e contracapa */
+    .capa {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0;
+    }
+
+    .capa .topo {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 185mm;
+      transform: translateX(-50%) scaleY(-1);
+    }
+
+    .capa .base {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 185mm;
+      transform: translateX(-50%);
+    }
+
+    .capa h1 {
+      font-size: 32pt;
+      letter-spacing: .3em;
+      margin: 0 0 0 .3em;
+      position: absolute;
+      top: 90mm;
+      left: 0;
+      right: 0;
+    }
+
+    .capa .logo {
+      width: 82mm;
+    }
+
+    .contracapa img.topo,
+    .contracapa img.base {
+      filter: sepia(1) saturate(1.5) hue-rotate(-22deg) brightness(.72);
+    }
+
+    .contracapa p {
+      font-size: 14pt;
+      line-height: 1.6;
+      color: var(--marrom-claro);
+    }
+
+    .contracapa .insta {
+      font-size: 17pt;
+      display: flex;
+      align-items: center;
+      gap: 2mm;
+      margin-bottom: 6mm;
+    }
+
+    .contracapa svg {
+      width: 8mm;
+      height: 8mm;
+    }
+
+    /* Hambúrgueres */
+    .burgers {
+      padding: 0 var(--margem);
+    }
+
+    .burger {
+      margin-bottom: 11mm;
+    }
+
+    .burger h4 {
+      font: 700 17pt/1.2 Lora, serif;
+      text-transform: uppercase;
+      display: flex;
+      align-items: baseline;
+      gap: 2mm;
+    }
+
+    .burger h4 small {
+      font-size: 11pt;
+      color: var(--azul);
+      text-transform: none;
+    }
+
+    .burger h4 em {
+      font-size: 14pt;
+      font-style: normal;
+      color: var(--laranja);
+      margin-left: auto;
+    }
+
+    .burger p {
+      text-wrap: balance;
+      font-size: 13pt;
+      line-height: 1.4;
+      margin-top: 1.5mm;
+    }
+
+    .p,
+    .q {
+      font-family: Lora, serif;
+    }
+
+    .p {
+      font-weight: var(--peso-preco);
+      /* espaço entre R$ e o valor, igual em todo o cardápio */
+      word-spacing: -0.12em;
+    }
+
+    .q {
+      font-weight: var(--peso-qtd);
+    }
+
+    /* Tamanho de preços e quantidades nas listas (1em = tamanho do texto da lista, --fs) */
+    .lista .p {
+      font-size: var(--tam-preco);
+    }
+
+    .lista li:not(.cab) .q {
+      font-size: var(--tam-qtd);
+    }
+
+    /* Descrições em laranja: (integral), ingredientes, (kids) */
+    .lista small:not(.q),
+    .lista em:not(.p):not(.q) {
+      font-size: var(--tam-desc);
+    }
+
+    .lista small:not(.q),
+    .lista em:not(.p):not(.q),
+    .burger h4 small {
+      font-weight: var(--peso-desc);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 1. CAPA -->
+  <section class="pagina capa">
+    <img class="topo" src="img/flores.png" alt="">
+    <h1>CARDÁPIO</h1>
+    <img class="logo" src="img/logo.png" alt="Maresia lounge bar">
+    <img class="base" src="img/flores.png" alt="">
+  </section>
+
+  <!-- 2. PETISCOS / PASTÉIS / TÁBUA -->
+  <section class="pagina">
+    <h2>PETISCOS</h2>
+    <ul class="lista">
+      <li><b>Batata frita</b><small class="q">400 g</small><i></i><em class="p">R$ 30</em></li>
+      <li><b>Bolinho de bacalhau</b><small class="q">10 un</small><i></i><em class="p">R$ 58</em></li>
+      <li><b>Bolinho de queijo</b><small class="q">400 g</small><i></i><em class="p">R$ 28</em></li>
+      <li><b>Camarão empanado</b><small class="q">300 g</small><i></i><em class="p">R$ 75</em></li>
+      <li><b>Casquinha de siri</b><small class="q">5 un</small><i></i><em class="p">R$ 65</em></li>
+      <li><b>Iscas de tilápia</b><small class="q">400 g</small><i></i><em class="p">R$ 60</em></li>
+      <li><b>Mini pães de queijo</b><small class="q">10 un</small><i></i><em class="p">R$ 28</em></li>
+      <li><b>Polenta palito</b><small class="q">400 g</small><i></i><em class="p">R$ 27</em></li>
+      <li><b>Violinha</b><small class="q">400 g</small><i></i><em class="p">R$ 62</em></li>
+    </ul>
+
+    <h2>PASTÉIS <small class="q">120 g</small></h2>
+    <ul class="lista">
+      <li><b>Camarão</b><i></i><em class="p">R$ 16</em></li>
+      <li><b>Carne</b><i></i><em class="p">R$ 13</em></li>
+      <li><b>Frango</b><i></i><em class="p">R$ 13</em></li>
+      <li><b>Queijo</b><i></i><em class="p">R$ 13</em></li>
+      <li><b>Brócolis com ricota</b><small class="lora">integral</small><i></i><em class="p">R$ 20</em></li>
+      <li><b>Palmito com requeijão</b><small class="lora">integral</small><i></i><em class="p">R$ 20</em></li>
+    </ul>
+
+    <h2>TÁBUA MARESIA</h2>
+    <p class="tabua">Batata frita <em class="q">300&nbsp;g</em>, bolinho de bacalhau <em class="q">6&nbsp;un</em><br>
+      iscas de tilápia <em class="q">200&nbsp;g</em>, ovo de codorna <em class="q">100&nbsp;g</em><br>
+      picles de pepino <em class="q">100&nbsp;g</em>, queijo <em class="q">100&nbsp;g</em><br>
+      salame <em class="q">100&nbsp;g</em> e violinha <em class="q">200&nbsp;g</em><strong class="p">R$ 175</strong></p>
+    <img class="flores" src="img/flores.png" alt="">
+  </section>
+
+  <!-- 3. HAMBÚRGUERES -->
+  <section class="pagina">
+    <h2>HAMBÚRGUERES</h2>
+    <h3 class="azul" style="font-size: 14pt; margin-bottom: 8mm">Todos acompanham batata frita <span
+        class="q medida">100&nbsp;g</span><br>e maionese à parte</h3>
+    <div class="burgers">
+      <div class="burger">
+        <h4>Bandaliera <em class="p">R$ 40</em></h4>
+        <p>Pão brioche, hambúrguer de frango empanado, maionese, alface, tomate e queijo cheddar ou prato</p>
+      </div>
+      <div class="burger">
+        <h4>Engenheiros do Hawaii <em class="p">R$ 42</em></h4>
+        <p>Descrição em breve</p>
+      </div>
+      <div class="burger">
+        <h4>Júpiter Maçã <em class="p">R$ 44</em></h4>
+        <p>Pão brioche, hambúrguer, maionese, alface, tomate, queijo cheddar ou prato e cebola caramelizada</p>
+      </div>
+      <div class="burger">
+        <h4>Nenhum de Nós <em class="p">R$ 42</em></h4>
+        <p>Pão brioche, hambúrguer de grão de bico, maionese, alface, tomate e queijo cheddar ou prato</p>
+      </div>
+      <div class="burger">
+        <h4>Replicantes <em class="p">R$ 42</em></h4>
+        <p>Pão brioche, hambúrguer, maionese, alface, tomate, queijo cheddar ou prato e picles de pepino</p>
+      </div>
+      <div class="burger">
+        <h4>TNT <em class="p">R$ 44</em></h4>
+        <p>Pão brioche, hambúrguer, maionese, alface, tomate, queijo cheddar ou prato e bacon</p>
+      </div>
+      <div class="burger">
+        <h4>Pequeno Cidadão <small>kids</small> <em class="p">R$ 40</em></h4>
+        <p>Pão brioche, hambúrguer, maionese e queijo cheddar ou prato</p>
+      </div>
+    </div>
+    <img class="flores" src="img/flores.png" alt="">
+  </section>
+
+  <!-- 4. ÁGUAS & REFRIS / SOBREMESAS / CAFÉS -->
+  <section class="pagina">
+    <h2>ÁGUAS &amp; REFRIS</h2>
+    <h3><span class="azul">Águas</span> <span class="q">500 ml</span> · <span
+        class="azul">Refrigerantes lata</span> <span class="q">350 ml</span></h3>
+    <ul class="lista">
+      <li><b>Água com gás</b><i></i><em class="p">R$ 6</em></li>
+      <li><b>Água sem gás</b><i></i><em class="p">R$ 6</em></li>
+      <li><b>Coca-Cola</b><i></i><em class="p">R$ 8</em></li>
+      <li><b>Coca-Cola zero açúcar</b><i></i><em class="p">R$ 8</em></li>
+      <li><b>Guaraná</b><i></i><em class="p">R$ 8</em></li>
+      <li><b>Guaraná zero açúcar</b><i></i><em class="p">R$ 8</em></li>
+      <li><b>Sprite</b><i></i><em class="p">R$ 8</em></li>
+      <li><b>Sprite zero açúcar</b><i></i><em class="p">R$ 8</em></li>
+      <li><b>Água tônica</b><i></i><em class="p">R$ 8</em></li>
+    </ul>
+
+    <h2>SOBREMESAS</h2>
+    <ul class="lista">
+      <li><b>Cheesecake de frutas vermelhas</b><i></i><em class="p">R$ 20</em></li>
+      <li><b>Petit Gâteau</b><i></i><em class="p">R$ 26</em></li>
+      <li><b>Torta de limão</b><i></i><em class="p">R$ 18</em></li>
+      <li><b>Torta do dia</b><small class="lora">consultar garçom</small><i></i><em class="p">R$ 22</em></li>
+    </ul>
+
+    <h2>CAFÉS</h2>
+    <ul class="lista">
+      <li><b>Café carioca</b><small class="q">160 ml</small><i></i><em class="p">R$ 12</em></li>
+      <li><b>Café com leite</b><small class="q">160 ml</small><i></i><em class="p">R$ 14</em></li>
+      <li><b>Café gelado</b><small class="q">360 ml</small><i></i><em class="p">R$ 23</em></li>
+      <li><b>Cappuccino</b><small class="q">160 ml</small><i></i><em class="p">R$ 17</em></li>
+      <li><b>Chocolate quente</b><small class="q">160 ml</small><i></i><em class="p">R$ 17</em></li>
+      <li><b>Espresso</b><small class="q">80 ml</small><i></i><em class="p">R$ 9</em></li>
+      <li><b>Espresso duplo</b><small class="q">160 ml</small><i></i><em class="p">R$ 12</em></li>
+      <li><b>Mocaccino</b><small class="q">160 ml</small><i></i><em class="p">R$ 17</em></li>
+    </ul>
+    <img class="flores" src="img/flores.png" alt="">
+  </section>
+
+  <!-- 5. AÇAÍ / SMOOTHIES / MILKSHAKES -->
+  <section class="pagina">
+    <h2>AÇAÍ</h2>
+    <h3>Até 3 acompanhamentos <span class="azul">· Adicional de <span class="p">R$ 3</span></span></h3>
+    <ul class="simples duas">
+      <li>Banana</li>
+      <li>Confete</li>
+      <li>Creme de avelã</li>
+      <li>Creme de chocolate</li>
+      <li>Granola</li>
+      <li>Leite condensado</li>
+      <li>Leite em pó</li>
+      <li>Mel</li>
+      <li>Morango</li>
+      <li>Paçoca</li>
+    </ul>
+    <div class="precos">
+      <div><span class="q">330 g</span><span class="p">R$ 25</span></div>
+    </div>
+    <div class="precos">
+      <div><span class="q">550 g</span><span class="p">R$ 35</span></div>
+    </div>
+
+
+    <h2>SMOOTHIES</h2>
+    <h3>Bebida à base de iogurte natural e suco</h3>
+    <ul class="simples duas">
+      <li>Abacaxi</li>
+      <li>Banana</li>
+      <li>Coco</li>
+      <li>Cupuaçu</li>
+      <li>Manga</li>
+      <li>Maracujá</li>
+      <li>Morango</li>
+      <li>Uva</li>
+    </ul>
+    <div class="precos cheio">
+      <div><span class="q">360 ml</span><span class="p">R$ 25</span></div>
+    </div>
+
+    <h2>MILKSHAKES</h2>
+    <ul class="simples duas">
+      <li>Abacaxi</li>
+      <li>Açaí</li>
+      <li>Amendoim</li>
+      <li>Banana</li>
+      <li>Café</li>
+      <li>Cappuccino</li>
+      <li>Chocolate</li>
+      <li>Cupuaçu</li>
+      <li>Manga</li>
+      <li>Maracujá</li>
+      <li>Morango</li>
+      <li>Uva</li>
+    </ul>
+    <div class="precos cheio">
+      <div><span class="q">360 ml</span><span class="p">R$ 23</span></div>
+    </div>
+  </section>
+
+  <!-- 6. SUCOS / DETOX / VITAMINAS -->
+  <section class="pagina">
+    <h2>SUCOS NATURAIS</h2>
+    <h3>Escolha até 2 frutas</h3>
+    <ul class="simples duas">
+      <li>Abacaxi</li>
+      <li>Abacaxi e hortelã</li>
+      <li>Açaí</li>
+      <li>Acerola</li>
+      <li>Cupuaçu</li>
+      <li>Laranja</li>
+      <li>Limão</li>
+      <li>Mamão</li>
+      <li>Manga</li>
+      <li>Maracujá</li>
+      <li>Morango</li>
+      <li>Uva</li>
+    </ul>
+    <div class="precos cheio">
+      <div><span class="q">400 ml</span><span class="p">R$ 15</span></div>
+    </div>
+
+    <h2>SUCOS DETOX</h2>
+    <ul class="simples bolinha">
+      <li>Cenoura, maçã, limão, laranja e gengibre</li>
+      <li>Couve, laranja e gengibre</li>
+      <li>Couve, limão e gengibre</li>
+    </ul>
+    <div class="precos cheio">
+      <div><span class="q">400 ml</span><span class="p">R$ 20</span></div>
+    </div>
+
+    <h2>VITAMINAS</h2>
+    <h3>Escolha até 2 frutas</h3>
+    <ul class="simples duas">
+      <li>Abacaxi</li>
+      <li>Açaí</li>
+      <li>Banana</li>
+      <li>Mamão</li>
+      <li>Manga</li>
+      <li>Morango</li>
+    </ul>
+    <div class="precos cheio">
+      <div><span class="q">400 ml</span><span class="p">R$ 18</span></div>
+    </div>
+
+    <div class="especial">
+      <small>Especial da casa</small>
+      <b>Bomba energética de açaí <em class="p">R$ 23</em></b>
+    </div>
+    <img class="flores" src="img/flores.png" alt="">
+  </section>
+
+  <!-- 7. MILKSHAKES ALCOÓLICOS / CHOPPS -->
+  <section class="pagina">
+    <h2>MILKSHAKES ALCOÓLICOS</h2>
+    <ul class="simples duas">
+      <li>Amarula</li>
+      <li>Café</li>
+      <li>Cappuccino</li>
+      <li>Cassis</li>
+      <li>Cereja</li>
+      <li>Chocolate</li>
+      <li>Coco</li>
+      <li>Curaçau blue</li>
+      <li>Menta</li>
+      <li>Morango</li>
+    </ul>
+    <div class="precos cheio">
+      <div><span class="q">360 ml</span><span class="p">R$ 33</span></div>
+    </div>
+
+    <h2>CHOPPS &amp; CEVAS</h2>
+    <div class="caixa">
+      <h3 class="marrom">Chopp Imigração 1824</h3>
+      <ul class="lista grade">
+        <li class="cab"><b></b><i></i><em class="q">300 ml</em><em class="q">500 ml</em></li>
+        <li><b>IPA</b><i></i><em class="p">R$ 20</em><em class="p">R$ 24</em></li>
+        <li><b>Pilsen</b><i></i><em class="p">R$ 15</em><em class="p">R$ 19</em></li>
+      </ul>
+    </div>
+    <div class="caixa">
+      <h3 class="marrom">Long Neck</h3>
+      <ul class="lista">
+        <li><b>Budweiser</b><i></i><em class="p">R$ 12</em></li>
+        <li><b>Corona</b><i></i><em class="p">R$ 15</em></li>
+        <li><b>Heineken</b><i></i><em class="p">R$ 15</em></li>
+      </ul>
+    </div>
+    <div class="caixa">
+      <h3 class="marrom"><span class="q">600 ml</span></h3>
+      <ul class="lista">
+        <li><b>Heineken</b><i></i><em class="p">R$ 21</em></li>
+        <li><b>Original</b><i></i><em class="p">R$ 20</em></li>
+      </ul>
+    </div>
+    <img class="flores" src="img/flores.png" alt="">
+  </section>
+
+  <!-- 8. CAPETAS / CAIPIRINHAS -->
+  <section class="pagina" style="--fs: 13.5pt">
+    <h2>CAPETAS</h2>
+    <h3 class="azul">Todos acompanham leite condensado</h3>
+    <ul class="lista">
+      <li><b>01. Amor de verão</b><i></i><em>vodca, morango e kiwi</em></li>
+      <li><b>02. Bento Gonçalves</b><i></i><em>vodca, morango e vinho</em></li>
+      <li><b>03. Caxias</b><i></i><em>vodca e uva</em></li>
+      <li><b>04. Clássico</b><i></i><em>vodca, abacaxi, uva e guaraná em pó</em></li>
+      <li><b>05. Doce amor</b><i></i><em>vinho e morango</em></li>
+      <li><b>06. Farroupilha</b><i></i><em>vodca e kiwi</em></li>
+      <li><b>07. Garibaldi</b><i></i><em>espumante e morango</em></li>
+      <li><b>08. Gramado</b><i></i><em>espumante e chocolate</em></li>
+      <li><b>09. Havaiana</b><i></i><em>espumante e coco</em></li>
+      <li><b>10. Maré mansa</b><i></i><em>vodca e maracujá</em></li>
+      <li><b>11. Maresia</b><i></i><em>vodca, abacaxi e pêssego</em></li>
+      <li><b>12. Onda de verão</b><i></i><em>vodca, morango e maracujá</em></li>
+      <li><b>13. Paixão</b><i></i><em>vodca e morango</em></li>
+      <li><b>14. Piña colada</b><i></i><em>vodca, abacaxi e licor de coco</em></li>
+      <li><b>15. Praiana</b><i></i><em>vodca, maracujá e coco</em></li>
+      <li><b>16. Sensação</b><i></i><em>vodca, morango e chocolate</em></li>
+      <li><b>17. Terra de areia</b><i></i><em>vodca e abacaxi</em></li>
+    </ul>
+    <div class="precos coluna">
+      <div><span class="q">300 ml</span><span class="p">R$ 27</span></div>
+      <div><span class="q">500 ml</span><span class="p">R$ 38</span></div>
+      <div><span class="q">700 ml</span><span class="p">R$ 48</span></div>
+    </div>
+
+    <h2 style="font-size: 23pt">CAIPIRINHAS &amp; CAIPIROSCAS</h2>
+    <ul class="simples sete">
+      <li>01. Abacaxi</li>
+      <li>02. Abacaxi e hortelã</li>
+      <li>03. Abacaxi e limão</li>
+      <li>04. Kiwi</li>
+      <li>05. Limão</li>
+      <li>06. Maçã verde</li>
+      <li>07. Maracujá</li>
+      <li>08. Maracujá e limão</li>
+      <li>09. Melão e hortelã</li>
+      <li>10. Morango</li>
+      <li>11. Morango e limão</li>
+      <li>12. Morango, limão e maracujá</li>
+      <li>13. Cerveja e limão</li>
+      <li>14. Vinho e limão</li>
+    </ul>
+    <div class="precos coluna">
+      <div><span class="q">300 ml</span><span class="p">R$ 27</span></div>
+      <div><span class="q">500 ml</span><span class="p">R$ 38</span></div>
+      <div><span class="q">700 ml</span><span class="p">R$ 48</span></div>
+    </div>
+  </section>
+
+  <!-- 9. DRINKS 01–15 -->
+  <section class="pagina" style="--fs: 14pt">
+    <h2>DRINKS</h2>
+    <ul class="lista drinks">
+      <li><b>01. 43 Spritz</b><small><span>licor 43</span>, <span>espumante</span> <span>e&nbsp;limão
+            siciliano</span></small><i></i><em class="p">R$ 38</em></li>
+      <li><b>02. Acqua Della Vita</b><small><span>aperol</span>, <span>xarope de baunilha</span>, <span>suco
+            cítrico</span> <span>e&nbsp;espuma de gengibre</span></small><i></i><em class="p">R$ 38</em></li>
+      <li><b>03. Alexander</b><small><span>licor de cacau</span>, <span>brandy</span> <span>e&nbsp;creme de
+            leite</span></small><i></i><em class="p">R$ 38</em></li>
+      <li><b>04. Alexia</b><small><span>licor de cacau</span>, <span>licor de café</span>, <span>brandy</span>
+          <span>e&nbsp;creme de leite</span></small><i></i><em class="p">R$
+          38</em>
+      </li>
+      <li><b>05. Americano</b><small><span>campari</span>, <span>vermute rosso</span> <span>e&nbsp;água com
+            gás</span></small><i></i><em class="p">R$ 35</em></li>
+      <li><b>06. Aperol Spritz</b><small><span>aperol</span>, <span>espumante prosecco</span> <span>e&nbsp;água com
+            gás</span></small><i></i><em class="p">R$
+          38</em></li>
+      <li><b>07. Baby Yoda</b><small><span>vodca</span>, <span>absinto</span>, <span>xarope de maçã</span>
+          <span>e&nbsp;suco de limão</span></small><i></i><em class="p">R$
+          38</em></li>
+      <li><b>08. Cozumel</b><small><span>vodca</span>, <span>chopp</span>, <span>suco de limão</span>
+          <span>e&nbsp;sal</span></small><i></i><em class="p">R$ 38</em></li>
+      <li><b>09. Cuba Libre</b><small><span>rum</span>, <span>Coca-Cola</span>
+          <span>e&nbsp;limão</span></small><i></i><em class="p">R$ 35</em></li>
+      <li><b>10. Daiquiri</b><small><span>rum</span>, <span>licor de laranja</span>, <span>suco de limão</span>
+          <span>e&nbsp;xarope de açúcar</span></small><i></i><em class="p">R$ 38</em>
+      </li>
+      <li><b>11. Dry Martini</b><small><span>gin</span> <span>e&nbsp;vermute seco</span></small><i></i><em class="p">R$
+          38</em></li>
+      <li><b>12. Garibaldi</b><small><span>campari</span>, <span>suco de laranja</span>, <span>espumante</span>
+          <span>e&nbsp;xarope de açúcar</span></small><i></i><em class="p">R$ 38</em>
+      </li>
+      <li><b>13. Gin Tônica</b><small><span>gin</span>, <span>tônica</span> <span>e&nbsp;limão
+            siciliano</span></small><i></i><em class="p">R$ 38</em></li>
+      <li><b>14. Green Island</b><small><span>vodca</span>, <span>licor de menta</span>, <span>suco de abacaxi</span>
+          <span>e&nbsp;limão</span></small><i></i><em class="p">R$
+          38</em></li>
+      <li><b>15. Hi-Fi</b><small><span>vodca</span>, <span>suco de laranja</span>
+          <span>e&nbsp;grenadine</span></small><i></i><em class="p">R$ 35</em></li>
+    </ul>
+  </section>
+
+  <!-- 10. DRINKS 16–30 -->
+  <section class="pagina" style="--fs: 14pt">
+    <h2>DRINKS</h2>
+    <ul class="lista drinks">
+      <li><b>16. Irish Coffee</b><small><span>uísque</span>, <span>café espresso</span>, <span>creme de leite</span>
+          <span>e&nbsp;xarope de açúcar</span></small><i></i><em class="p">R$
+          38</em></li>
+      <li><b>17. Lagoa Azul</b><small><span>vodca</span>, <span>curaçau blue</span>
+          <span>e&nbsp;limoneto</span></small><i></i><em class="p">R$ 35</em></li>
+      <li><b>18. Lillet Spritz</b><small><span>licor lillet</span>, <span>espumante</span> <span>e&nbsp;água com
+            gás</span></small><i></i><em class="p">R$ 38</em>
+      </li>
+      <li><b>19. Limoncello Spritz</b><small><span>licor limoncello</span>, <span>espumante</span> <span>e&nbsp;água com
+            gás</span></small><i></i><em class="p">R$
+          38</em>
+      </li>
+      <li><b>20. Mai Tai</b><small><span>rum</span>, <span>licor de laranja</span>, <span>suco de limão</span>
+          <span>e&nbsp;xarope de amêndoa</span></small><i></i><em class="p">R$ 38</em>
+      </li>
+      <li><b>21. Manhattan</b><small><span>uísque</span>, <span>vermute seco</span>, <span>angostura</span>
+          <span>e&nbsp;cereja</span></small><i></i><em class="p">R$ 40</em>
+      </li>
+      <li><b>22. Maré Vermelha</b><small><span>vodca</span>, <span>curaçau red</span>
+          <span>e&nbsp;limoneto</span></small><i></i><em class="p">R$ 35</em></li>
+      <li><b>23. Margarita</b><small><span>tequila</span>, <span>licor de laranja</span> <span>e&nbsp;suco de
+            limão</span></small><i></i><em class="p">R$ 38</em>
+      </li>
+      <li><b>24. Mojito</b><small><span>rum</span>, <span>suco de limão</span> <span>e&nbsp;xarope de
+            açúcar</span></small><i></i><em class="p">R$ 38</em></li>
+      <li><b>25. Moscow Mule</b><small><span>vodca</span>, <span>suco de limão</span> <span>e&nbsp;xarope de
+            gengibre</span></small><i></i><em class="p">R$ 38</em>
+      </li>
+      <li><b>26. Negroni</b><small><span>campari</span>, <span>vermute rosso</span>
+          <span>e&nbsp;gin</span></small><i></i><em class="p">R$ 38</em></li>
+      <li><b>27. Piña Colada Cubana</b><small><span>rum</span>, <span>abacaxi</span>, <span>leite de coco</span>
+          <span>e&nbsp;leite condensado</span></small><i></i><em class="p">R$
+          38</em></li>
+      <li><b>28. Piña Colada Mexicana</b><small><span>tequila</span>, <span>abacaxi</span>, <span>leite de coco</span>
+          <span>e&nbsp;leite condensado</span></small><i></i><em class="p">R$
+          38</em></li>
+      <li><b>29. Piña Fresh</b><small><span>rum</span>, <span>abacaxi</span>, <span>creme de menta</span>
+          <span>e&nbsp;leite condensado</span></small><i></i><em class="p">R$
+          38</em></li>
+      <li><b>30. Pink Lemonade</b><small><span>rum</span>, <span>suco de limão</span>, <span>limoneto</span>
+          <span>e&nbsp;grenadine</span></small><i></i><em class="p">R$ 35</em>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 11. DRINKS 31–34 / DOSES -->
+  <section class="pagina" style="--fs: 14pt">
+    <ul class="lista drinks">
+      <li><b>31. Rosemary</b><small><span>campari</span>, <span>tequila</span> <span>e&nbsp;suco
+            cítrico</span></small><i></i><em class="p">R$ 38</em></li>
+      <li><b>32. Sex on the Beach</b><small><span>vodca</span>, <span>licor de pêssego</span>, <span>suco de
+            laranja</span> <span>e&nbsp;grenadine</span></small><i></i><em class="p">R$
+          38</em></li>
+      <li><b>33. Tequila Sunrise</b><small><span>tequila</span>, <span>suco de laranja</span>
+          <span>e&nbsp;grenadine</span></small><i></i><em class="p">R$ 38</em>
+      </li>
+      <li><b>34. Whiskey Sour</b><small><span>uísque Jameson</span>, <span>suco de limão</span> <span>e&nbsp;xarope de
+            amêndoa</span></small><i></i><em class="p">R$
+          38</em>
+      </li>
+    </ul>
+    <h2>DOSES <small class="q">50 ml</small></h2>
+    <ul class="lista" style="line-height: 1.5">
+      <li><b>Campari</b><i></i><em class="p">R$ 12</em></li>
+      <li><b>Licor 43</b><i></i><em class="p">R$ 25</em></li>
+      <li><b>Licor Amarula</b><i></i><em class="p">R$ 23</em></li>
+      <li><b>Licor Jägermeister</b><i></i><em class="p">R$ 23</em></li>
+      <li><b>Licor Sheridan's</b><i></i><em class="p">R$ 35</em></li>
+      <li><b>Tequila ouro José Cuervo</b><i></i><em class="p">R$ 25</em></li>
+      <li><b>Tequila prata José Cuervo</b><i></i><em class="p">R$ 25</em></li>
+      <li><b>Uísque Black Label</b><i></i><em class="p">R$ 25</em></li>
+      <li><b>Uísque Chivas Regal</b><i></i><em class="p">R$ 20</em></li>
+      <li><b>Uísque Jack Daniel's Fire</b><i></i><em class="p">R$ 25</em></li>
+      <li><b>Uísque Jack Daniel's Honey</b><i></i><em class="p">R$ 25</em></li>
+      <li><b>Uísque Jack Daniel's Nº 7</b><i></i><em class="p">R$ 25</em></li>
+      <li><b>Uísque Jack Daniel's Rye</b><i></i><em class="p">R$ 30</em></li>
+      <li><b>Uísque Jameson</b><i></i><em class="p">R$ 23</em></li>
+      <li><b>Uísque Natu Nobilis</b><i></i><em class="p">R$ 15</em></li>
+      <li><b>Uísque Passport</b><i></i><em class="p">R$ 18</em></li>
+      <li><b>Uísque Red Label</b><i></i><em class="p">R$ 20</em></li>
+      <li><b>Uísque White Horse</b><i></i><em class="p">R$ 20</em></li>
+      <li><b>Underberg</b><i></i><em class="p">R$ 15</em></li>
+      <li><b>Vodca Absolut</b><i></i><em class="p">R$ 18</em></li>
+      <li><b>Vodca Ciroc</b><i></i><em class="p">R$ 20</em></li>
+      <li><b>Vodca Smirnoff</b><i></i><em class="p">R$ 12</em></li>
+      <li><b>Vodca Stolichnaya</b><i></i><em class="p">R$ 20</em></li>
+      <li><b>Vodca Wyborowa</b><i></i><em class="p">R$ 20</em></li>
+      <li><b>Whisky Johnnie Walker Red</b><i></i><em class="p">R$ 18</em></li>
+      <li><b>Whisky Johnnie Walker Black</b><i></i><em class="p">R$ 25</em></li>
+      <li><b>Whisky Johnnie Walker Double Black</b><i></i><em class="p">R$ 28</em></li>
+      <li><b>Whisky Johnnie Walker Gold</b><i></i><em class="p">R$ 30</em></li>
+      <li><b>Whisky Makers Mark</b><i></i><em class="p">R$ 22</em></li>
+      <li><b>Whisky Red Label</b><i></i><em class="p">R$ 20</em></li>
+      <li><b>Whisky White Horse</b><i></i><em class="p">R$ 20</em></li>
+    </ul>
+  </section>
+
+</body>
+
+</html>
