@@ -294,6 +294,11 @@
       background: var(--laranja);
     }
 
+    /* Só o preço, sem medida: ocupa a faixa inteira */
+    .precos span:only-child {
+      grid-column: 1 / -1;
+    }
+
     .precos.coluna {
       flex-direction: column;
       gap: 1mm;
@@ -463,7 +468,7 @@
     }
 
     .burger {
-      margin-bottom: 11mm;
+      margin-bottom: 9.5mm;
     }
 
     .burger h4 {
@@ -548,11 +553,10 @@
     <ul class="lista">
       <li><b>Batata frita</b><small class="q">400 g</small><i></i><em class="p">R$ 30</em></li>
       <li><b>Bolinho de bacalhau</b><small class="q">10 un</small><i></i><em class="p">R$ 58</em></li>
-      <li><b>Bolinho de queijo</b><small class="q">400 g</small><i></i><em class="p">R$ 28</em></li>
+      <li><b>Camarão alho e óleo</b><small class="q">360 g</small><i></i><em class="p">R$ ??</em></li>
       <li><b>Camarão empanado</b><small class="q">300 g</small><i></i><em class="p">R$ 75</em></li>
       <li><b>Casquinha de siri</b><small class="q">5 un</small><i></i><em class="p">R$ 65</em></li>
       <li><b>Iscas de tilápia</b><small class="q">400 g</small><i></i><em class="p">R$ 60</em></li>
-      <li><b>Mini pães de queijo</b><small class="q">10 un</small><i></i><em class="p">R$ 28</em></li>
       <li><b>Polenta palito</b><small class="q">400 g</small><i></i><em class="p">R$ 27</em></li>
       <li><b>Violinha</b><small class="q">400 g</small><i></i><em class="p">R$ 62</em></li>
     </ul>
@@ -563,8 +567,9 @@
       <li><b>Carne</b><i></i><em class="p">R$ 13</em></li>
       <li><b>Frango</b><i></i><em class="p">R$ 13</em></li>
       <li><b>Queijo</b><i></i><em class="p">R$ 13</em></li>
-      <li><b>Brócolis com ricota</b><small class="lora">integral</small><i></i><em class="p">R$ 20</em></li>
-      <li><b>Palmito com requeijão</b><small class="lora">integral</small><i></i><em class="p">R$ 20</em></li>
+      <li><b>Chocolate preto ao leite</b><i></i><em class="p">R$ ??</em></li>
+      <li><b>Mini pastéis de carne</b><i></i><em class="p">R$ ??</em></li>
+      <li><b>Mini pastéis de frango</b><i></i><em class="p">R$ ??</em></li>
     </ul>
 
     <h2>TÁBUA MARESIA</h2>
@@ -587,11 +592,11 @@
       </div>
       <div class="burger">
         <h4>Engenheiros do Hawaii <em class="p">R$ 42</em></h4>
-        <p>Descrição em breve</p>
+        <p>Pão brioche, hambúrguer 180 g, maionese, alface, tomate e queijo cheddar ou prato</p>
       </div>
       <div class="burger">
         <h4>Júpiter Maçã <em class="p">R$ 44</em></h4>
-        <p>Pão brioche, hambúrguer, maionese, alface, tomate, queijo cheddar ou prato e cebola caramelizada</p>
+        <p>Pão brioche, hambúrguer 180 g, maionese, alface, tomate, queijo cheddar ou prato e cebola caramelizada</p>
       </div>
       <div class="burger">
         <h4>Nenhum de Nós <em class="p">R$ 42</em></h4>
@@ -599,15 +604,15 @@
       </div>
       <div class="burger">
         <h4>Replicantes <em class="p">R$ 42</em></h4>
-        <p>Pão brioche, hambúrguer, maionese, alface, tomate, queijo cheddar ou prato e picles de pepino</p>
+        <p>Pão brioche, hambúrguer 180 g, maionese, alface, tomate, queijo cheddar ou prato e picles de pepino</p>
       </div>
       <div class="burger">
         <h4>TNT <em class="p">R$ 44</em></h4>
-        <p>Pão brioche, hambúrguer, maionese, alface, tomate, queijo cheddar ou prato e bacon</p>
+        <p>Pão brioche, hambúrguer 180 g, maionese, alface, tomate, queijo cheddar ou prato e bacon</p>
       </div>
       <div class="burger">
-        <h4>Pequeno Cidadão <small>kids</small> <em class="p">R$ 40</em></h4>
-        <p>Pão brioche, hambúrguer, maionese e queijo cheddar ou prato</p>
+        <h4>Pequeno Cidadão <em class="p">R$ 40</em></h4>
+        <p>Pão brioche, hambúrguer 180 g, maionese e queijo cheddar ou prato</p>
       </div>
     </div>
     <img class="flores" src="img/flores.png" alt="">
@@ -652,27 +657,33 @@
     <img class="flores" src="img/flores.png" alt="">
   </section>
 
-  <!-- 5. AÇAÍ / SMOOTHIES / MILKSHAKES -->
+  <!-- 5. AÇAÍ / SMOOTHIES / SODA ITALIANA -->
   <section class="pagina">
     <h2>AÇAÍ</h2>
     <h3>Até 3 acompanhamentos <span class="azul">· Adicional de <span class="p">R$ 3</span></span></h3>
+    <h3 class="azul">Frutas</h3>
     <ul class="simples duas">
+      <li>Abacaxi</li>
       <li>Banana</li>
+      <li>Kiwi</li>
+      <li>Morango</li>
+      <li>Uva verde</li>
+    </ul>
+    <h3 class="azul">Outros</h3>
+    <ul class="simples duas">
       <li>Confete</li>
       <li>Creme de avelã</li>
       <li>Creme de chocolate</li>
+      <li>Creme de leite em pó</li>
       <li>Granola</li>
       <li>Leite condensado</li>
       <li>Leite em pó</li>
       <li>Mel</li>
-      <li>Morango</li>
       <li>Paçoca</li>
     </ul>
     <div class="precos">
-      <div><span class="q">330 g</span><span class="p">R$ 25</span></div>
-    </div>
-    <div class="precos">
-      <div><span class="q">550 g</span><span class="p">R$ 35</span></div>
+      <div><span class="q">300 g</span><span class="p">R$ 25</span></div>
+      <div><span class="q">500 g</span><span class="p">R$ 35</span></div>
     </div>
 
 
@@ -692,23 +703,18 @@
       <div><span class="q">360 ml</span><span class="p">R$ 25</span></div>
     </div>
 
-    <h2>MILKSHAKES</h2>
+    <h2>SODA ITALIANA</h2>
+    <h3>Drink sem álcool</h3>
     <ul class="simples duas">
-      <li>Abacaxi</li>
-      <li>Açaí</li>
-      <li>Amendoim</li>
-      <li>Banana</li>
-      <li>Café</li>
-      <li>Cappuccino</li>
-      <li>Chocolate</li>
-      <li>Cupuaçu</li>
-      <li>Manga</li>
+      <li>Cereja</li>
+      <li>Coco</li>
+      <li>Maçã verde</li>
       <li>Maracujá</li>
+      <li>Menta</li>
       <li>Morango</li>
-      <li>Uva</li>
     </ul>
     <div class="precos cheio">
-      <div><span class="q">360 ml</span><span class="p">R$ 23</span></div>
+      <div><span class="p">R$ 25</span></div>
     </div>
   </section>
 
@@ -765,8 +771,27 @@
     <img class="flores" src="img/flores.png" alt="">
   </section>
 
-  <!-- 7. MILKSHAKES ALCOÓLICOS / CHOPPS -->
+  <!-- 7. MILKSHAKES / MILKSHAKES ALCOÓLICOS -->
   <section class="pagina">
+    <h2>MILKSHAKES</h2>
+    <ul class="simples duas">
+      <li>Abacaxi</li>
+      <li>Açaí</li>
+      <li>Amendoim</li>
+      <li>Banana</li>
+      <li>Café</li>
+      <li>Cappuccino</li>
+      <li>Chocolate</li>
+      <li>Cupuaçu</li>
+      <li>Manga</li>
+      <li>Maracujá</li>
+      <li>Morango</li>
+      <li>Uva</li>
+    </ul>
+    <div class="precos cheio">
+      <div><span class="q">360 ml</span><span class="p">R$ 25</span></div>
+    </div>
+
     <h2>MILKSHAKES ALCOÓLICOS</h2>
     <ul class="simples duas">
       <li>Amarula</li>
@@ -783,14 +808,22 @@
     <div class="precos cheio">
       <div><span class="q">360 ml</span><span class="p">R$ 33</span></div>
     </div>
+    <img class="flores" src="img/flores.png" alt="">
+  </section>
 
+  <!-- 8. CHOPPS & CEVAS -->
+  <section class="pagina">
     <h2>CHOPPS &amp; CEVAS</h2>
     <div class="caixa">
       <h3 class="marrom">Chopp Imigração 1824</h3>
       <ul class="lista grade">
         <li class="cab"><b></b><i></i><em class="q">300 ml</em><em class="q">500 ml</em></li>
-        <li><b>IPA</b><i></i><em class="p">R$ 20</em><em class="p">R$ 24</em></li>
-        <li><b>Pilsen</b><i></i><em class="p">R$ 15</em><em class="p">R$ 19</em></li>
+        <li><b>Chopp IPA</b><i></i><em class="p">R$ 20</em><em class="p">R$ 24</em></li>
+        <li><b>Chopp Pilsen</b><i></i><em class="p">R$ 15</em><em class="p">R$ 19</em></li>
+      </ul>
+      <ul class="lista">
+        <li><b>Chopp envasado IPA</b><small class="q">1 litro</small><i></i><em class="p">R$ ??</em></li>
+        <li><b>Chopp envasado Pilsen</b><small class="q">1 litro</small><i></i><em class="p">R$ ??</em></li>
       </ul>
     </div>
     <div class="caixa">
@@ -799,6 +832,8 @@
         <li><b>Budweiser</b><i></i><em class="p">R$ 12</em></li>
         <li><b>Corona</b><i></i><em class="p">R$ 15</em></li>
         <li><b>Heineken</b><i></i><em class="p">R$ 15</em></li>
+        <li><b>Heineken zero álcool</b><i></i><em class="p">R$ 15</em></li>
+        <li><b>Stella Artois Pure Gold</b><i></i><em class="p">R$ 15</em></li>
       </ul>
     </div>
     <div class="caixa">
@@ -811,7 +846,7 @@
     <img class="flores" src="img/flores.png" alt="">
   </section>
 
-  <!-- 8. CAPETAS / CAIPIRINHAS -->
+  <!-- 9. CAPETAS / CAIPIRINHAS -->
   <section class="pagina" style="--fs: 13.5pt">
     <h2>CAPETAS</h2>
     <h3 class="azul">Todos acompanham leite condensado</h3>
@@ -864,8 +899,8 @@
     </div>
   </section>
 
-  <!-- 9. DRINKS 01–15 -->
-  <section class="pagina" style="--fs: 14pt">
+  <!-- 10. DRINKS 01–12 -->
+  <section class="pagina">
     <h2>DRINKS</h2>
     <ul class="lista drinks">
       <li><b>01. 43 Spritz</b><small><span>licor 43</span>, <span>espumante</span> <span>e&nbsp;limão
@@ -898,6 +933,14 @@
       <li><b>12. Garibaldi</b><small><span>campari</span>, <span>suco de laranja</span>, <span>espumante</span>
           <span>e&nbsp;xarope de açúcar</span></small><i></i><em class="p">R$ 38</em>
       </li>
+    </ul>
+    <img class="flores" src="img/flores.png" alt="">
+  </section>
+
+  <!-- 11. DRINKS 13–23 -->
+  <section class="pagina">
+    <h2>DRINKS</h2>
+    <ul class="lista drinks">
       <li><b>13. Gin Tônica</b><small><span>gin</span>, <span>tônica</span> <span>e&nbsp;limão
             siciliano</span></small><i></i><em class="p">R$ 38</em></li>
       <li><b>14. Green Island</b><small><span>vodca</span>, <span>licor de menta</span>, <span>suco de abacaxi</span>
@@ -905,13 +948,6 @@
           38</em></li>
       <li><b>15. Hi-Fi</b><small><span>vodca</span>, <span>suco de laranja</span>
           <span>e&nbsp;grenadine</span></small><i></i><em class="p">R$ 35</em></li>
-    </ul>
-  </section>
-
-  <!-- 10. DRINKS 16–30 -->
-  <section class="pagina" style="--fs: 14pt">
-    <h2>DRINKS</h2>
-    <ul class="lista drinks">
       <li><b>16. Irish Coffee</b><small><span>uísque</span>, <span>café espresso</span>, <span>creme de leite</span>
           <span>e&nbsp;xarope de açúcar</span></small><i></i><em class="p">R$
           38</em></li>
@@ -927,7 +963,7 @@
       <li><b>20. Mai Tai</b><small><span>rum</span>, <span>licor de laranja</span>, <span>suco de limão</span>
           <span>e&nbsp;xarope de amêndoa</span></small><i></i><em class="p">R$ 38</em>
       </li>
-      <li><b>21. Manhattan</b><small><span>uísque</span>, <span>vermute seco</span>, <span>angostura</span>
+      <li><b>21. Manhattan</b><small><span>uísque</span>, <span>vermute rosso</span>, <span>angostura</span>
           <span>e&nbsp;cereja</span></small><i></i><em class="p">R$ 40</em>
       </li>
       <li><b>22. Maré Vermelha</b><small><span>vodca</span>, <span>curaçau red</span>
@@ -935,6 +971,14 @@
       <li><b>23. Margarita</b><small><span>tequila</span>, <span>licor de laranja</span> <span>e&nbsp;suco de
             limão</span></small><i></i><em class="p">R$ 38</em>
       </li>
+    </ul>
+    <img class="flores" src="img/flores.png" alt="">
+  </section>
+
+  <!-- 12. DRINKS 24–34 -->
+  <section class="pagina">
+    <h2>DRINKS</h2>
+    <ul class="lista drinks">
       <li><b>24. Mojito</b><small><span>rum</span>, <span>suco de limão</span> <span>e&nbsp;xarope de
             açúcar</span></small><i></i><em class="p">R$ 38</em></li>
       <li><b>25. Moscow Mule</b><small><span>vodca</span>, <span>suco de limão</span> <span>e&nbsp;xarope de
@@ -954,12 +998,6 @@
       <li><b>30. Pink Lemonade</b><small><span>rum</span>, <span>suco de limão</span>, <span>limoneto</span>
           <span>e&nbsp;grenadine</span></small><i></i><em class="p">R$ 35</em>
       </li>
-    </ul>
-  </section>
-
-  <!-- 11. DRINKS 31–34 / DOSES -->
-  <section class="pagina" style="--fs: 14pt">
-    <ul class="lista drinks">
       <li><b>31. Rosemary</b><small><span>campari</span>, <span>tequila</span> <span>e&nbsp;suco
             cítrico</span></small><i></i><em class="p">R$ 38</em></li>
       <li><b>32. Sex on the Beach</b><small><span>vodca</span>, <span>licor de pêssego</span>, <span>suco de
@@ -973,13 +1011,22 @@
           38</em>
       </li>
     </ul>
+    <h3 class="azul">Para mais drinks, consulte o garçom<br>Todos podem ser sem álcool</h3>
+    <img class="flores" src="img/flores.png" alt="">
+  </section>
+
+  <!-- 13. DOSES -->
+  <section class="pagina">
     <h2>DOSES <small class="q">50 ml</small></h2>
     <ul class="lista" style="line-height: 1.5">
       <li><b>Campari</b><i></i><em class="p">R$ 12</em></li>
+      <li><b>Fireball</b><i></i><em class="p">R$ ??</em></li>
+      <li><b>Jim Beam</b><i></i><em class="p">R$ ??</em></li>
+      <li><b>Johnnie Walker</b><i></i><em class="p">R$ ??</em></li>
       <li><b>Licor 43</b><i></i><em class="p">R$ 25</em></li>
       <li><b>Licor Amarula</b><i></i><em class="p">R$ 23</em></li>
       <li><b>Licor Jägermeister</b><i></i><em class="p">R$ 23</em></li>
-      <li><b>Licor Sheridan's</b><i></i><em class="p">R$ 35</em></li>
+      <li><b>Licor Sheridan's</b><i></i><em class="p">R$ 30</em></li>
       <li><b>Tequila ouro José Cuervo</b><i></i><em class="p">R$ 25</em></li>
       <li><b>Tequila prata José Cuervo</b><i></i><em class="p">R$ 25</em></li>
       <li><b>Uísque Black Label</b><i></i><em class="p">R$ 25</em></li>
@@ -999,10 +1046,10 @@
       <li><b>Vodca Smirnoff</b><i></i><em class="p">R$ 12</em></li>
       <li><b>Vodca Stolichnaya</b><i></i><em class="p">R$ 20</em></li>
     </ul>
-    <img class="flores" src="img/flores.png" alt="" style="width: 80mm">
+    <img class="flores" src="img/flores.png" alt="">
   </section>
 
-  <!-- 12. CONTRACAPA -->
+  <!-- 14. CONTRACAPA -->
   <section class="pagina capa contracapa">
     <img class="topo" src="img/flores.png" alt="">
     <p class="insta">
