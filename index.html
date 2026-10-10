@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=620">
   <title>Cardápio Maresia</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -534,133 +534,6 @@
     .lista em:not(.p):not(.q),
     .burger h4 small {
       font-weight: var(--peso-desc);
-    }
-
-    /* ===== Leitura na web (só tela; o PDF usa as regras acima) ===== */
-    @media screen {
-      .pagina {
-        width: 100%;
-        max-width: 156mm;
-        height: auto;
-        min-height: 321mm;
-        padding-bottom: 8mm;
-        overflow: visible;
-      }
-
-      img {
-        max-width: 100%;
-      }
-
-      /* Flores entram no fluxo, no pé da página, para não cobrir o texto */
-      .flores {
-        position: static;
-        transform: none;
-        display: block;
-        width: 77%;
-        margin: auto auto -8mm;
-        padding-top: 4mm;
-      }
-
-      /* Capa e contracapa: proporção da página impressa, medidas em % da largura */
-      .capa {
-        min-height: 0;
-        aspect-ratio: 156 / 321;
-        padding-bottom: 0;
-      }
-
-      .capa .topo,
-      .capa .base {
-        width: 100%;
-      }
-
-      .capa h1 {
-        top: 28%;
-      }
-
-      .capa .logo {
-        width: 53%;
-      }
-
-      /* Descrição sem preço (capetas, "consultar garçom") pode quebrar */
-      .lista small:not(.q),
-      .lista em:not(.p):not(.q) {
-        white-space: normal;
-        text-align: right;
-      }
-
-      .p {
-        white-space: nowrap;
-      }
-
-      .lista.drinks small {
-        text-align: left;
-      }
-    }
-
-    /* Celular */
-    @media screen and (max-width: 600px) {
-      :root {
-        --margem: 16px;
-      }
-
-      .pagina {
-        --fs: 17px !important;
-        min-height: 0;
-        margin: 0 auto 6px;
-      }
-
-      /* nome longo quebra; o preço segue na 1ª linha */
-      .lista b {
-        white-space: normal;
-      }
-
-      /* Capetas (descrição no lugar do preço): quem quebra é a descrição */
-      .lista li:has(> em:not(.p)) b {
-        flex-shrink: 0;
-        max-width: 60%;
-      }
-
-      h2 {
-        font-size: 26px;
-      }
-
-      h2 small {
-        font-size: 17px;
-      }
-
-      .tabua {
-        font-size: 17px;
-      }
-
-      .capa h1 {
-        font-size: 26px;
-      }
-
-      .contracapa p {
-        font-size: 16px;
-      }
-
-      .contracapa .insta {
-        font-size: 18px;
-      }
-
-      .burger h4 {
-        font-size: 19px;
-      }
-
-      .burger h4 small {
-        font-size: 15px;
-      }
-
-      .burger h4 em {
-        font-size: 16px;
-      }
-
-      /* Caipirinhas: 1 coluna quando 2 não cabem */
-      .simples.sete {
-        grid-template-rows: none;
-        grid-auto-flow: row;
-      }
     }
   </style>
 </head>
