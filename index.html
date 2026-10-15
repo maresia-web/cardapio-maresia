@@ -51,12 +51,30 @@
       width: 156mm;
       height: 321mm;
       margin: 10mm auto;
-      padding-top: 13mm;
+      padding: 13mm 0 10mm;
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       background: url(img/fundo.jpg) center / cover;
+    }
+
+    /* Sobra da página dividida por igual entre as seções e o rodapé */
+    .pagina>h2:not(:first-child),
+    .pagina>.caixa {
+      margin-top: auto;
+    }
+
+    .pagina>:last-child {
+      margin-bottom: auto;
+    }
+
+    /* Página de uma seção só: os itens se espalham até o rodapé */
+    .estica {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
     }
 
     @media print {
@@ -399,7 +417,6 @@
       line-height: 2;
     }
 
-    /* Flores no rodapé */
     /* Valor ainda não definido: chamativo de propósito, pra ninguém esquecer de trocar */
     .placeholder {
       background: #ffe600;
@@ -409,14 +426,6 @@
       padding: 0 1.2mm;
       font-weight: 800;
       white-space: nowrap;
-    }
-
-    .flores {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 120mm;
-      transform: translateX(-50%);
     }
 
     /* Capa e contracapa */
@@ -597,7 +606,6 @@
       iscas de tilápia <em class="q">200&nbsp;g</em>, ovo de codorna <em class="q">100&nbsp;g</em><br>
       picles de pepino <em class="q">100&nbsp;g</em>, queijo <em class="q">100&nbsp;g</em><br>
       salame <em class="q">100&nbsp;g</em> e violinha <em class="q">200&nbsp;g</em><strong class="p">R$ 175</strong></p>
-    <img class="flores" src="img/flores.png" alt="">
   </section>
 
   <!-- 3. HAMBÚRGUERES -->
@@ -605,7 +613,7 @@
     <h2>HAMBÚRGUERES</h2>
     <h3 class="azul" style="font-size: 14pt; margin-bottom: 8mm">Todos acompanham batata frita <span
         class="q medida">100&nbsp;g</span><br>e maionese à parte</h3>
-    <div class="burgers">
+    <div class="burgers estica">
       <div class="burger">
         <h4>Bandaliera <em class="p">R$ 40</em></h4>
         <p>Pão brioche, hambúrguer de frango empanado 130 g, maionese, alface, tomate e queijo cheddar ou prato</p>
@@ -635,7 +643,6 @@
         <p>Pão brioche, hambúrguer 180 g, maionese e queijo cheddar ou prato</p>
       </div>
     </div>
-    <img class="flores" src="img/flores.png" alt="">
   </section>
 
   <!-- 4. ÁGUAS & REFRIS / SOBREMESAS / CAFÉS -->
@@ -674,7 +681,6 @@
       <li><b>Espresso duplo</b><small class="q">160 ml</small><i></i><em class="p">R$ 12</em></li>
       <li><b>Mocaccino</b><small class="q">160 ml</small><i></i><em class="p">R$ 17</em></li>
     </ul>
-    <img class="flores" src="img/flores.png" alt="">
   </section>
 
   <!-- 5. AÇAÍ / SMOOTHIES / SODA ITALIANA -->
@@ -784,7 +790,6 @@
       <small>Especial da casa</small>
       <b>Bomba energética de açaí <em class="p">R$ 23</em></b>
     </div>
-    <img class="flores" src="img/flores.png" alt="">
   </section>
 
   <!-- 7. MILKSHAKES / MILKSHAKES ALCOÓLICOS -->
@@ -824,7 +829,6 @@
     <div class="precos cheio">
       <div><span class="q">360 ml</span><span class="p">R$ 33</span></div>
     </div>
-    <img class="flores" src="img/flores.png" alt="">
   </section>
 
   <!-- 8. CHOPPS & CEVAS -->
@@ -859,7 +863,6 @@
         <li><b>Original</b><i></i><em class="p">R$ 20</em></li>
       </ul>
     </div>
-    <img class="flores" src="img/flores.png" alt="">
   </section>
 
   <!-- 9. CAPETAS / CAIPIRINHAS -->
@@ -928,7 +931,7 @@
   <section class="pagina">
     <h2>DRINKS</h2>
     <h3 class="azul" style="margin-bottom: 6mm">Todos os drinks podem ser feitos sem álcool</h3>
-    <ul class="lista drinks">
+    <ul class="lista drinks estica">
       <li><b>01. 43 Spritz</b><small><span>licor 43</span>, <span>espumante</span> <span>e&nbsp;limão
             siciliano</span></small><i></i><em class="p">R$ 38</em></li>
       <li><b>02. Acqua Della Vita</b><small><span>aperol</span>, <span>xarope de baunilha</span>, <span>suco
@@ -958,13 +961,12 @@
           38</em></li>
       <li><b>12. Fernet Cola</b><small><span>fernet</span> <span>e&nbsp;Coca-Cola</span></small><i></i><em class="p"><span class="placeholder">R$ ??</span></em></li>
     </ul>
-    <img class="flores" src="img/flores.png" alt="">
   </section>
 
   <!-- 11. DRINKS 13–25 -->
   <section class="pagina">
     <h2>DRINKS</h2>
-    <ul class="lista drinks">
+    <ul class="lista drinks estica">
       <li><b>13. Garibaldi</b><small><span>campari</span>, <span>suco de laranja</span>, <span>espumante</span>
           <span>e&nbsp;xarope de açúcar</span></small><i></i><em class="p">R$ 38</em>
       </li>
@@ -1000,13 +1002,12 @@
             limão</span></small><i></i><em class="p">R$ 38</em>
       </li>
     </ul>
-    <img class="flores" src="img/flores.png" alt="">
   </section>
 
   <!-- 12. DRINKS 26–36 -->
   <section class="pagina">
     <h2>DRINKS</h2>
-    <ul class="lista drinks">
+    <ul class="lista drinks estica">
       <li><b>26. Mojito</b><small><span>rum</span>, <span>suco de limão</span> <span>e&nbsp;xarope de
             açúcar</span></small><i></i><em class="p">R$ 38</em></li>
       <li><b>27. Moscow Mule</b><small><span>vodca</span>, <span>suco de limão</span> <span>e&nbsp;xarope de
@@ -1040,13 +1041,12 @@
       </li>
     </ul>
     <h3 class="azul">Para mais drinks, consulte o garçom</h3>
-    <img class="flores" src="img/flores.png" alt="">
   </section>
 
   <!-- 13. DOSES -->
   <section class="pagina">
     <h2>DOSES <small class="q">50 ml</small></h2>
-    <ul class="lista" style="line-height: 1.5">
+    <ul class="lista estica" style="line-height: 1.5">
       <li><b>Campari</b><i></i><em class="p">R$ 12</em></li>
       <li><b>Licor 43</b><i></i><em class="p">R$ 25</em></li>
       <li><b>Licor Amarula</b><i></i><em class="p">R$ 23</em></li>
@@ -1074,7 +1074,6 @@
       <li><b>Vodca Smirnoff</b><i></i><em class="p">R$ 12</em></li>
       <li><b>Vodca Stolichnaya</b><i></i><em class="p">R$ 20</em></li>
     </ul>
-    <img class="flores" src="img/flores.png" alt="">
   </section>
 
   <!-- 14. CONTRACAPA -->
